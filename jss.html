@@ -1,0 +1,22 @@
+<script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+  $(document).ready(function () {
+    $("#username").blur(function () {
+      $("#msgbox").removeClass().addClass('messagebox').text('Checking...').fadeIn("slow");
+
+      // Проверяем с помощью скрипта существует ли имя
+      $.post("check_username.php", { user_name: $(this).val() }, function (data) {
+        if (data === 'taken') {
+          $("#msgbox").fadeTo(200, 0.1, function () {
+            $(this).html('This username is already taken').addClass('messageboxerror').fadeTo(900, 1);
+          });
+        } else {
+          $("#msgbox").fadeTo(200, 0.1, function () {
+            $(this).html('This username is available').addClass('messageboxok').fadeTo(900, 1);
+          });
+        }
+      });
+    });
+  });
+</script>
